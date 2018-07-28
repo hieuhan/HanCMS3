@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HanCMS", "HanCMS\HanCMS.csproj", "{5A472326-A11E-413A-9AE5-AA901C1BB96F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A472326-A11E-413A-9AE5-AA901C1BB96F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A472326-A11E-413A-9AE5-AA901C1BB96F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A472326-A11E-413A-9AE5-AA901C1BB96F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A472326-A11E-413A-9AE5-AA901C1BB96F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0E2D3049-62C8-42B2-85B4-BDE01A1FC283}
+	EndGlobalSection
+EndGlobal
