@@ -1,42 +1,43 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hệ thống quản lý bán hàng</title>
+    <link rel="shortcut icon" href="@Url.Content("~/assets/images/favicon.ico")" type="image/x-icon" />
+    @Styles.Render("~/bundles/Css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/Js")
+    @Scripts.Render("~/bundles/jqueryval")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <div class="bgwebbody">
+        <div class="wightfull">
+            @*@{Html.RenderAction("PartialHeader", "Shared");}*@
+            @RenderSection("menudieuhuong", required: false)
+            <div class="clear5px"></div>
+            <div class="khungnoidungconten">
+                <div class="khungcontenpading">
+                    @RenderBody()
+                    <div class="clear5px"></div>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+            <div class="clear5px"></div>
+            <div id="footer-wrap">
+                <div id="footer">
+                    <p>
+                        © 2018 HanSoft
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        Phát triển bởi <a href="mailto:hantrunghieu@gmail.com">Hàn Trung Hiếu</a>.
+                        <a href="index.html">Chính sách bảo mật&nbsp;&nbsp;&nbsp;</a> | &nbsp;&nbsp;&nbsp;
+                        <a href="index.html">Điều khoản sử dụng&nbsp;&nbsp;&nbsp;</a> |
+                    </p>
+                </div>
             </div>
+            <div class="clear5px"></div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <span id="loading">Đang tải dữ liệu...</span>
 </body>
 </html>
