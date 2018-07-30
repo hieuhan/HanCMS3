@@ -43,5 +43,11 @@
     <Compile Include="DbHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HanSoft.HelperLib\HanSoft.HelperLib.csproj">
+      <Project>{42F7DF8B-2E2D-47F9-9F03-26E8EE67ED91}</Project>
+      <Name>HanSoft.HelperLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
