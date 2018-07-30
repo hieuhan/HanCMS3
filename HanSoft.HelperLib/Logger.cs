@@ -95,6 +95,12 @@ namespace HanSoft.HelperLib
             }
         }
 
+        /// <summary>
+        /// Writes exceptions to log files
+        /// </summary>
+        /// <param name="ex">Pass the exception ex as parameter</param>
+        /// <param name="userdetails">user login details</param>
+        /// <returns>Returns false if an exception occurs while writing to file</returns>
         public bool Write(Exception ex, string userdetails = null)
         {
             _readWriteLock.EnterWriteLock();
@@ -138,6 +144,12 @@ namespace HanSoft.HelperLib
             }
         }
 
+        /// <summary>
+        /// Write custom strings apart from exceptions
+        /// </summary>
+        /// <param name="logMessage">Message to write to the file</param>
+        /// <param name="userDetails">user login details</param>
+        /// <returns>true->is successful, false-> otherwise</returns>
         public bool Write(string logMessage, string userDetails = null)
         {
             _readWriteLock.EnterWriteLock();

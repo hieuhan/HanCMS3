@@ -11,6 +11,7 @@ namespace HanCMS.Controllers
     {
         public ActionResult Index()
         {
+            Logger.InstanceInfo.Write(new Exception("a"),"admin");
             return View();
         }
 

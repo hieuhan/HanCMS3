@@ -126,5 +126,51 @@ namespace HanSoft.HelperLib
 
         #endregion
 
+        #region Execute
+
+        public DataSet ExecuteDataSet(DbCommand cmd)
+        {
+            DbProviderFactory dbfactory = DbProviderFactories.GetFactory(_providerName);
+            DbDataAdapter dbDataAdapter = dbfactory.CreateDataAdapter();
+            dbDataAdapter.SelectCommand = cmd;
+            DataSet ds = new DataSet();
+            dbDataAdapter.Fill(ds);
+            return ds;
+        }
+
+        public DataTable ExecuteDataTable(DbCommand cmd)
+        {
+            DbProviderFactory dbfactory = DbProviderFactories.GetFactory(_providerName);
+            DbDataAdapter dbDataAdapter = dbfactory.CreateDataAdapter();
+            dbDataAdapter.SelectCommand = cmd;
+            DataTable dataTable = new DataTable();
+            dbDataAdapter.Fill(dataTable);
+            return dataTable;
+        }
+
+        public DbDataReader ExecuteReader(DbCommand cmd)
+        {
+            cmd.Connection.Open();
+            DbDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            return reader;
+        }
+
+        public int ExecuteNonQuery(DbCommand cmd)
+        {
+            cmd.Connection.Open();
+            int ret = cmd.ExecuteNonQuery();
+            cmd.Connection.Close();
+            return ret;
+        }
+
+        public object ExecuteScalar(DbCommand cmd)
+        {
+            cmd.Connection.Open();
+            object ret = cmd.ExecuteScalar();
+            cmd.Connection.Close();
+            return ret;
+        }
+        #endregion
+
     }
 }

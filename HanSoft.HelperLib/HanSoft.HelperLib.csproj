@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CacheHelper.cs" />
+    <Compile Include="CommandHelper.cs" />
     <Compile Include="ConfigHelper.cs" />
     <Compile Include="DbHelper.cs" />
     <Compile Include="Logger.cs" />
