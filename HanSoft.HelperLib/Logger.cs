@@ -12,11 +12,11 @@ namespace HanSoft.HelperLib
     {
         private ReaderWriterLockSlim _readWriteLock = new ReaderWriterLockSlim();
         private static FileInfo _logFileInfo;
-        private static DirectoryInfo _logDirectory { get { return _logFileInfo?.Directory; } }
+        private static DirectoryInfo LogDirectory { get { return _logFileInfo?.Directory; } }
         private readonly long _maxLogFileSize = 0;
-        private const string _strLineBreak = "\n========================\n";
-        private const string _strLineBreakCustom = "\n*********************************\n\n\n\n";
-        private const string _strLineBreakEnd = "\n----------------------------------------------------------\n\n\n";
+        private const string StrLineBreakCustom = "\r\n************************************************************\r\n";
+        private const string StrLineBreak = "\r\n----------------------------------------------------------\r\n";
+        private const string StrLineBreakEnd = "\r\n==========================================================\r\n";
         private readonly string _strLogFilePath;
 
 
@@ -62,11 +62,11 @@ namespace HanSoft.HelperLib
 
         private static void VerifyTargetDirectory()
         {
-            if (_logDirectory != null)
+            if (LogDirectory != null)
             {
-                _logDirectory.Refresh();
-                if (!_logDirectory.Exists)
-                    _logDirectory.Create();
+                LogDirectory.Refresh();
+                if (!LogDirectory.Exists)
+                    LogDirectory.Create();
             }
         }
 
@@ -103,33 +103,29 @@ namespace HanSoft.HelperLib
                 CheckLogSize();
                 if (File.Exists(_strLogFilePath))
                 {
-                    File.AppendAllText(_strLogFilePath, DateTime.UtcNow.ToString()
-                                                        + " : Exception :"
-                                                        + ex.Message + "\n"
-                                                        + "Inner Exception : " + _strLineBreak
-                                                        + ex.InnerException + "\n"
-                                                        + "Stack Trace :" + _strLineBreak
-                                                        + ex.StackTrace + "\n"
-                                                        + "Date:" + _strLineBreak
-                                                        + DateTime.Now.ToString() + "\n"
-                                                        + " UserDetails :" + userdetails
-                                                        + "Source : " + _strLineBreak
-                                                        + ex.Source + _strLineBreakEnd);
+                    File.AppendAllText(_strLogFilePath, "Log time: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss.fff") + "\r\n"
+                                                        + "User :" + userdetails + StrLineBreak
+                                                        + "Exception :" + "\r\n"
+                                                        + ex.Message + StrLineBreak
+                                                        + "Inner Exception : " + "\r\n"
+                                                        + ex.InnerException + StrLineBreak
+                                                        + "Stack Trace :" + "\r\n"
+                                                        + ex.StackTrace + StrLineBreak
+                                                        + "Source : " + "\r\n"
+                                                        + ex.Source + StrLineBreakEnd);
                     return true;
                 }
                 VerifyTargetDirectory();
-                File.WriteAllText(_strLogFilePath, DateTime.UtcNow.ToString()
-                                                   + " : Exception :" + _strLineBreak
-                                                   + ex.Message + "\n"
-                                                   + "Inner Exception :" + _strLineBreak
-                                                   + ex.InnerException + "\n"
-                                                   + "Stack Trace :" + _strLineBreak
-                                                   + ex.StackTrace + "\n"
-                                                   + "Date:" + _strLineBreak
-                                                   + DateTime.Now.ToString() + "\n"
-                                                   + " UserDetails :" + userdetails
-                                                   + "Source :" + _strLineBreak
-                                                   + ex.Source + _strLineBreakEnd);
+                File.WriteAllText(_strLogFilePath, "Log time: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss.fff") + "\r\n"
+                                                   + "User :" + userdetails + StrLineBreak
+                                                   + "Exception :" + "\r\n"
+                                                   + ex.Message + StrLineBreak
+                                                   + "Inner Exception :" + "\r\n"
+                                                   + ex.InnerException + StrLineBreak
+                                                   + "Stack Trace :" + "\r\n"
+                                                   + ex.StackTrace + StrLineBreak
+                                                   + "Source :" + "\r\n"
+                                                   + ex.Source + StrLineBreakEnd);
                 return true;
             }
             catch
@@ -149,22 +145,22 @@ namespace HanSoft.HelperLib
             {
                 if (File.Exists(_strLogFilePath))
                 {
-                    File.AppendAllText(_strLogFilePath, _strLineBreak
-                                                        + DateTime.UtcNow.ToString()
-                                                        + "; UserDetails :" + userDetails
-                                                        + " : " + logMessage + _strLineBreakCustom);
+                    File.AppendAllText(_strLogFilePath, "Log time: " +
+                                                        DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss.fff") + "\r\n"
+                                                        + "User :" + userDetails + "\r\n"
+                                                        + "Message : " + logMessage + StrLineBreakEnd);
                     return true;
                 }
 
                 VerifyTargetDirectory();
 
-                File.WriteAllText(_strLogFilePath, _strLineBreak
-                                                   + DateTime.UtcNow.ToString()
-                                                   + "; UserDetails :" + userDetails
-                                                   + " : " + logMessage + _strLineBreakCustom);
+                File.WriteAllText(_strLogFilePath, 
+                                                   "Log time: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss.fff") + "\r\n"
+                                                   + "User :" + userDetails + "\r\n"
+                                                   + "Message : " + logMessage + StrLineBreakEnd);
                 return true;
             }
-            catch(Exception e)
+            catch
             {
                 return false;
             }
