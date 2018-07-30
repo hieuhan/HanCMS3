@@ -119,10 +119,10 @@ namespace HanSoft.HelperLib
         /// <param name="procName"></param>
         /// <param name="ps"></param>
         /// <returns>returns the affected row</returns>
-        public int RunProc(string procName, params DbParameter[] ps)
+        public int RunProc(string procName, ref DbCommand cmd, params DbParameter[] ps)
         {
             int num = 0;
-            DbCommand cmd = _dbHelper.CreateProcCommand(procName);
+            cmd = _dbHelper.CreateProcCommand(procName);
             try
             {
                 cmd.Parameters.AddRange(ps);
