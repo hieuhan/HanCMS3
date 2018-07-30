@@ -10,29 +10,41 @@ namespace HanSoft.HelperLib
 {
     public sealed class Logger
     {
-
-        private static Logger _instance;
         private ReaderWriterLockSlim _readWriteLock = new ReaderWriterLockSlim();
-        private readonly FileInfo _logFileInfo;
+        private static FileInfo _logFileInfo;
+        private static DirectoryInfo _logDirectory { get { return _logFileInfo?.Directory; } }
         private readonly long _maxLogFileSize = 0;
         private const string _strLineBreak = "\n========================\n";
         private const string _strLineBreakCustom = "\n*********************************\n\n\n\n";
         private const string _strLineBreakEnd = "\n----------------------------------------------------------\n\n\n";
         private readonly string _strLogFilePath;
 
-        public static Logger InstanceInfo()
+
+        //public static Logger Instance;
+
+        public static Logger Instance;
+
+        public static Logger InstanceInfo
         {
-            return _instance ?? (_instance = new Logger(string.Concat(AppDomain.CurrentDomain.BaseDirectory , "Logs\\", LogLevel.Info,"_", DateTime.UtcNow.ToString("dd/MM/yyyy HH:mm:ss.fff"), ".log") , 0));
+            get
+            {
+                return Instance ?? (Instance = new Logger(string.Concat(AppDomain.CurrentDomain.BaseDirectory, "Logs\\", LogLevel.Info, "_", DateTime.UtcNow.ToString("ddMMyyyyHHmmssfff"), ".log"), 0));
+            }
         }
 
-        public static Logger InstanceError()
+        public static Logger InstanceWarning
         {
-            return _instance ?? (_instance = new Logger(string.Concat(AppDomain.CurrentDomain.BaseDirectory, "Logs\\", LogLevel.Error, "_", DateTime.UtcNow.ToString("dd/MM/yyyy HH:mm:ss.fff"), ".log"), 0));
+            get
+            {
+                return Instance ?? (Instance = new Logger(string.Concat(AppDomain.CurrentDomain.BaseDirectory, "Logs\\", LogLevel.Warning, "_", DateTime.UtcNow.ToString("ddMMyyyyHHmmssfff"), ".log"), 0));
+            }
         }
-
-        public static Logger InstanceWarning()
+        public static Logger InstanceError
         {
-            return _instance ?? (_instance = new Logger(string.Concat(AppDomain.CurrentDomain.BaseDirectory, "Logs\\", LogLevel.Warning, "_", DateTime.UtcNow.ToString("dd/MM/yyyy HH:mm:ss.fff"), ".log"), 0));
+            get
+            {
+                return Instance ?? (Instance = new Logger(string.Concat(AppDomain.CurrentDomain.BaseDirectory, "Logs\\", LogLevel.Error, "_", DateTime.UtcNow.ToString("ddMMyyyyHHmmssfff"), ".log"), 0));
+            }
         }
 
         public Logger(string strLogFilePath, long maxLogFileSize)
@@ -47,6 +59,17 @@ namespace HanSoft.HelperLib
         {
             
         }
+
+        private static void VerifyTargetDirectory()
+        {
+            if (_logDirectory != null)
+            {
+                _logDirectory.Refresh();
+                if (!_logDirectory.Exists)
+                    _logDirectory.Create();
+            }
+        }
+
 
         private bool CheckLogSize()
         {
@@ -94,6 +117,7 @@ namespace HanSoft.HelperLib
                                                         + ex.Source + _strLineBreakEnd);
                     return true;
                 }
+                VerifyTargetDirectory();
                 File.WriteAllText(_strLogFilePath, DateTime.UtcNow.ToString()
                                                    + " : Exception :" + _strLineBreak
                                                    + ex.Message + "\n"
@@ -118,7 +142,7 @@ namespace HanSoft.HelperLib
             }
         }
 
-        public bool Write(string strMessage, string userdetails = null)
+        public bool Write(string logMessage, string userDetails = null)
         {
             _readWriteLock.EnterWriteLock();
             try
@@ -127,17 +151,20 @@ namespace HanSoft.HelperLib
                 {
                     File.AppendAllText(_strLogFilePath, _strLineBreak
                                                         + DateTime.UtcNow.ToString()
-                                                        + "; UserDetails :" + userdetails
-                                                        + " : " + strMessage + _strLineBreakCustom);
+                                                        + "; UserDetails :" + userDetails
+                                                        + " : " + logMessage + _strLineBreakCustom);
                     return true;
                 }
+
+                VerifyTargetDirectory();
+
                 File.WriteAllText(_strLogFilePath, _strLineBreak
                                                    + DateTime.UtcNow.ToString()
-                                                   + "; UserDetails :" + userdetails
-                                                   + " : " + strMessage + _strLineBreakCustom);
+                                                   + "; UserDetails :" + userDetails
+                                                   + " : " + logMessage + _strLineBreakCustom);
                 return true;
             }
-            catch
+            catch(Exception e)
             {
                 return false;
             }
